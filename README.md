@@ -71,7 +71,8 @@ const gun = Gun();
 
 const fruitStock = gun.get('stock').path('fruit');
 
-// Stream listen to the fruit stock.
+// Let's create a most stream over our stock that will warn
+// us when our stock count for any fruit hits 0.
 fruitStock
   // Use gun's map so we map over each fruit item in the set.
   .map()
