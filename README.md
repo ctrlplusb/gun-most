@@ -1,31 +1,91 @@
-> This is a starter kit for an npm library.  See the [STARTER](/docs/STARTER.md) docs for more information on how it is configured and how you should use it.  Delete this message and customise the readme below to your own needs.
+# gun-most
 
-# Your Library Name
+Extends gunDB with the ability to chain into most.js observables.
 
-A one liner description of your library.
-
-___BADGES: EDIT THESE TO USE THE URLS FOR EACH SERVICE CONFIGURED FOR YOUR OWN LIBRARY, THEN REMOVE THIS MESSAGE___
-
-[![npm](https://img.shields.io/npm/v/npm-library-starter.svg?style=flat-square)](http://npm.im/npm-library-starter)
-[![MIT License](https://img.shields.io/npm/l/npm-library-starter.svg?style=flat-square)](http://opensource.org/licenses/MIT)
-[![Travis](https://img.shields.io/travis/ctrlplusb/npm-library-starter.svg?style=flat-square)](https://travis-ci.org/ctrlplusb/npm-library-starter)
-[![Codecov](https://img.shields.io/codecov/c/github/ctrlplusb/npm-library-starter.svg?style=flat-square)](https://codecov.io/github/ctrlplusb/npm-library-starter)
+[![npm](https://img.shields.io/npm/v/gun-most.svg?style=flat-square)](http://npm.im/gun-most)
+[![MIT License](https://img.shields.io/npm/l/gun-most.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![Travis](https://img.shields.io/travis/ctrlplusb/gun-most.svg?style=flat-square)](https://travis-ci.org/ctrlplusb/gun-most)
+[![Codecov](https://img.shields.io/codecov/c/github/ctrlplusb/gun-most.svg?style=flat-square)](https://codecov.io/github/ctrlplusb/gun-most)
 
 ## TOCs
 
   - [Introduction](#introduction)
-  - [FAQs](#faqs)
+  - [Installation](#installation)
+  - [Usage](#usage)
 
 ## Introduction
 
-An introduction to your library...
+This library extends the `gun` chain so that you get an `on`-equivalent observable stream that is powered by [`most`](https://github.com/cujojs/most).
 
-## FAQs
+> Note: it depends on the 0.5 beta release of gun (`npm install amark/gun#0.5`)
 
-___A common question around your library?___
+## Installation
 
-The answer to the question.
+```
+yarn add gun-most
+```
 
-___A common question around your library?___
+Or, if you are using npm:
 
-The answer to the question.
+```
+npm install gum-most -S
+```
+
+## Usage
+
+```js
+import 'gun-most';
+import Gun from 'gun/gun';
+
+const gun = Gun();
+
+const favouriteFruit = gun.get('me').path('favouriteFruit');
+
+// Create a most stream against the item.
+const favouriteFruit$ = favouriteFruit.most();
+
+// You now have access to all the most.js operators!
+// https://github.com/cujojs/most/blob/master/docs/api.md
+
+// Start listening to our stream.
+favouriteFruit$.observe(x => console.log(x));
+
+favouriteFruit.put('banana');
+favouriteFruit.put('orange');
+```
+
+This will result in a console output of:
+
+```
+banana
+orange
+```
+
+You can also work against sets:
+
+```js
+import 'gun-most';
+import Gun from 'gun/gun';
+
+const gun = Gun();
+
+const fruitStock = gun.get('stock').path('fruit');
+
+// Stream listen to the fruit stock.
+fruitStock.most()
+  // Filter down to items with count being 0
+  .filter(x => x.count === 0)
+  // Print a warning!
+  .observe(({ name }) => console.log(`"${name}" is out of stock!`));
+
+const banana = favouriteFruit.set({ name: 'banana', count: 100 });
+const orange = favouriteFruit.set({ name: 'orange', count: 1337 });
+
+banana.path('count').put(0);
+```
+
+This will result in a console output of:
+
+```
+"banana" is out of stock!
+```

@@ -25,6 +25,20 @@ function webpackConfigFactory({ target } : Args) {
       library: libraryName,
       libraryTarget: 'umd',
     },
+    externals: {
+      most: {
+        root: 'most',
+        umd: 'most',
+      },
+      'most-subject': {
+        root: 'most-subject',
+        umd: 'most-subject',
+      },
+      'gun/gun': {
+        root: 'gun/gun',
+        umd: 'gun/gun',
+      },
+    },
     plugins: removeEmpty([
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),

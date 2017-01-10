@@ -1,7 +1,7 @@
 {
-  "name": "npm-library-starter",
-  "version": "0.0.1",
-  "description": "Starter kit for npm libraries.",
+  "name": "gun-most",
+  "version": "0.1.0",
+  "description": "Extends gunDB with the ability to chain into most.js observables.",
   "license": "MIT",
   "main": "commonjs/index.js",
   "files": [
@@ -12,9 +12,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ctrlplusb/npm-library-starter.git"
+    "url": "https://github.com/ctrlplusb/gun-most.git"
   },
-  "homepage": "https://github.com/ctrlplusb/npm-library-starter#readme",
+  "homepage": "https://github.com/ctrlplusb/gun-most#readme",
   "author": "Sean Matheson <sean@ctrlplusb.com>",
   "keywords": [
     "library"
@@ -23,7 +23,6 @@
     "build": "babel-node ./tools/scripts/build.js",
     "check": "yarn run lint && yarn run flow && yarn run test",
     "clean": "rimraf ./commonjs && rimraf ./umd && rimraf ./coverage && rimraf ./flow-coverage",
-    "example:web": "echo 'Make sure to `cd example/web && yarn install`' && cd example/web && yarn run start",
     "flow": "babel-node ./tools/scripts/flow",
     "flow:coverage": "flow-coverage-report -i 'src/**/*.js' -t html -t json -t text",
     "flow:defs": "flow-typed install --overwrite",
@@ -32,6 +31,11 @@
     "test": "jest",
     "test:coverage": "yarn run test -- --coverage",
     "test:coverage:deploy": "yarn run coverage && codecov"
+  },
+  "peerDependencies": {
+    "gun": "amark/gun#0.5",
+    "most": "^1.0.0",
+    "most-subject": "^5.0.0"
   },
   "devDependencies": {
     "app-root-dir": "1.0.2",
@@ -58,9 +62,12 @@
     "flow-coverage-report": "0.2.0",
     "flow-typed": "2.0.0",
     "ghooks": "2.0.0",
+    "gun": "amark/gun#0.5",
     "gzip-size": "3.0.0",
     "in-publish": "2.0.0",
     "jest": "18.1.0",
+    "most": "^1.1.1",
+    "most-subject": "^5.3.0",
     "pretty-bytes": "4.0.2",
     "ramda": "0.23.0",
     "readline-sync": "1.4.5",
