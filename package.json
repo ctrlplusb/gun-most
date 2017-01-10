@@ -30,7 +30,7 @@
     "prepublish": "yarn run build",
     "test": "jest",
     "test:coverage": "yarn run test -- --coverage",
-    "test:coverage:deploy": "yarn run coverage && codecov"
+    "test:coverage:deploy": "yarn run test:coverage && codecov"
   },
   "peerDependencies": {
     "gun": "amark/gun#0.5",
