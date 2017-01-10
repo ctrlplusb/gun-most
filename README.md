@@ -28,7 +28,7 @@ yarn add gun-most
 Or, if you are using npm:
 
 ```
-npm install gum-most -S
+npm install gun-most -S
 ```
 
 ## Usage
