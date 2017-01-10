@@ -72,7 +72,13 @@ const gun = Gun();
 const fruitStock = gun.get('stock').path('fruit');
 
 // Stream listen to the fruit stock.
-fruitStock.most()
+fruitStock
+  // Use gun's map so we map over each fruit item in the set.
+  .map()
+  // Convert the result to a most stream
+  .most()
+  // Now we are in the land of most operators.
+  // https://github.com/cujojs/most/blob/master/docs/api.md
   // Filter down to items with count being 0
   .filter(x => x.count === 0)
   // Print a warning!
