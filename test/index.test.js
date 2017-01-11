@@ -3,9 +3,19 @@
 import Gun from 'gun/gun';
 
 // Under test.
-import '../src';
+import { CompleteToken } from '../src';
 
 describe('gun-most', () => {
+  it('CompleteToken', () => {
+    const gun = Gun();
+    const foo = gun.get('foo');
+    const completeToken = CompleteToken();
+    setTimeout(() => completeToken.complete(), 10);
+    // The "observe" promise should be resolved when it completes.
+    return foo.most({ completeToken })
+      .observe(() => undefined);
+  });
+
   describe('primitive', () => {
     it('most', () => {
       const gun = Gun();
@@ -28,7 +38,7 @@ describe('gun-most', () => {
       });
     });
 
-    it('most({ change: true })', () => {
+    it('most({ options: { change: true } })', () => {
       const gun = Gun();
       const foo = gun.get('foo').put({
         bar: 'bar',
@@ -43,7 +53,7 @@ describe('gun-most', () => {
       return new Promise((resolve, reject) => {
         let idx = 0;
 
-        foo.most({ change: true }).observe((data) => {
+        foo.most({ options: { change: true } }).observe((data) => {
           if (idx === 1) {
             // We only want to assert on the second "put" operation.
             try {
@@ -93,7 +103,7 @@ describe('gun-most', () => {
       });
     });
 
-    it('most({ change: true })', () => {
+    it('most({ options: { change: true } })', () => {
       const gun = Gun();
       const foo = gun.get('foo');
       const item = foo.set({
@@ -109,7 +119,7 @@ describe('gun-most', () => {
       return new Promise((resolve, reject) => {
         let idx = 0;
 
-        foo.map().most({ change: true }).observe((data) => {
+        foo.map().most({ options: { change: true } }).observe((data) => {
           if (idx === 1) {
             // We only want to assert on the second "put" operation.
             try {
