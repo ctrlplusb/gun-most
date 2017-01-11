@@ -1,6 +1,6 @@
 {
   "name": "gun-most",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Extends gunDB with the ability to chain into most.js observables.",
   "license": "MIT",
   "main": "commonjs/index.js",
