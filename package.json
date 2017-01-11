@@ -17,7 +17,10 @@
   "homepage": "https://github.com/ctrlplusb/gun-most#readme",
   "author": "Sean Matheson <sean@ctrlplusb.com>",
   "keywords": [
-    "library"
+    "gun",
+    "most",
+    "most-subject",
+    "observables"
   ],
   "scripts": {
     "build": "babel-node ./tools/scripts/build.js",
